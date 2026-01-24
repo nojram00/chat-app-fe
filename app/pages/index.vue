@@ -8,7 +8,7 @@
                     Create Your Private Chat With Friends or Peers.
                 </template>
                 <template #description>
-                    <UButton>Get Started</UButton>
+                    <UButton to="/chat">Get Started</UButton>
                 </template>
             </UPageHero>
         </UMain>

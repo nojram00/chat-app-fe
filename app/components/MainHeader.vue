@@ -3,7 +3,7 @@ import type { NavigationMenuItem } from '@nuxt/ui'
 
 const route = useRoute();
 
-const routes = [
+const items = computed<NavigationMenuItem[]>(() => [
   {
     label: 'Home',
     to: '/',
@@ -13,38 +13,40 @@ const routes = [
     label: 'Chat',
     to: '/chat',
     active: route.path.startsWith('/chat')
-  },
-  {
-    label: 'Join',
-    to: '/join',
-    active: route.path.startsWith('/join')
   }
-];
-
-const items = computed<NavigationMenuItem[]>(() => routes);
+]);
 </script>
 
 <template>
-  <UHeader>
-    <template #title>
-      <Logo class="h-6 w-auto" />
-    </template>
-
-    <UNavigationMenu :items="items" />
-
-    <template #right>
-      <UColorModeButton />
-
-      <UTooltip text="Open on GitHub" :kbds="['meta', 'G']">
-        <UButton
-          color="neutral"
-          variant="ghost"
-          to="https://github.com/nuxt/ui"
-          target="_blank"
-          icon="i-simple-icons-github"
-          aria-label="GitHub"
+  <header>
+    <UHeader>
+      <template #title>
+        <Logo class="h-6 w-auto" />
+      </template>
+  
+      <UNavigationMenu :items="items" class="hidden lg:flex" />
+  
+      <template #right>
+        <UColorModeButton />
+  
+        <UTooltip text="Open on GitHub" :kbds="['meta', 'G']">
+          <UButton
+            color="neutral"
+            variant="ghost"
+            to="https://github.com/nuxt/ui"
+            target="_blank"
+            icon="i-simple-icons-github"
+            aria-label="GitHub"
+          />
+        </UTooltip>
+      </template>
+      <template #body>
+        <UNavigationMenu 
+          :items="items"
+          orientation="vertical"
+          class="p-4"
         />
-      </UTooltip>
-    </template>
-  </UHeader>
+      </template>
+    </UHeader>
+  </header>
 </template>
