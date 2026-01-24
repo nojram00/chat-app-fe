@@ -2,10 +2,13 @@
 
 const instance = useChatManager();
 const { set, get } = useCookies();
+const { publish } = usePubsub();
 // const instance = useLocalChatManager();
 
 const room = ref();
 const user = ref();
+
+const ready = ref(false);
 
 const handleJoin = () => {
     const roomId = room.value;
@@ -35,6 +38,12 @@ if(cookie_room && cookie_user) {
     room.value = cookie_room;
 }
 
+onMounted(async () => {
+    await instance.waitForConnection();
+    ready.value = true; 
+    publish('wsready');
+});
+
 </script>
 
 <template>
@@ -43,9 +52,9 @@ if(cookie_room && cookie_user) {
             <h2 class="text-xl font-semibold text-center">Join Room</h2>
 
             <div class="space-y-3">
-                <UInput v-model="room" placeholder="Enter room ID..." class="w-full" />
-                <UInput v-model="user" placeholder="Enter Username..." class="w-full" />
-                <UButton class="w-full" size="lg" @click="handleJoin">
+                <UInput v-model="room" :disabled="!ready" placeholder="Enter room ID..." class="w-full" />
+                <UInput v-model="user" :disabled="!ready" placeholder="Enter Username..." class="w-full" />
+                <UButton :disabled="!ready" class="w-full" size="lg" @click="handleJoin">
                     Join
                 </UButton>
             </div>

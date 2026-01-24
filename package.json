@@ -22,7 +22,7 @@
     "cookie-js": "^0.0.1",
     "eslint": "^9.39.2",
     "js-cookie": "^3.0.5",
-    "nojram-messaging-api-client": "^3.0.2",
+    "nojram-messaging-api-client": "^3.1.2",
     "nuxt": "^4.3.0",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3",

@@ -3,13 +3,23 @@
 
     const instance = useChatManager();
 
-    instance.listen('join', () => {
-        mode.value = 'chat';
+    const { subscribe } = usePubsub();
+
+    onMounted(() => {
+        subscribe('wsready', function() {
+            console.log('Server Ready!');
+    
+            instance.listen('join', () => {
+                console.log('Joined')
+                mode.value = 'chat';
+            });
+        
+            instance.listen('disconnected', () => {
+                mode.value = 'join';
+            });
+        });
     });
 
-    instance.listen('disconnected', () => {
-        mode.value = 'join';
-    });
 
 </script>
 
